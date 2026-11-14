@@ -253,7 +253,7 @@
     },
     {
       "FieldName": "MinMemory",
-      "DefaultValue": "256",
+      "DefaultValue": "512",
       "Category": "category.java:coffee",
       "DisplayName": "setting.MinMemory.name",
       "Description": "setting.MinMemory.desc",
