@@ -1,0 +1,221 @@
+{
+  "Id": "dd23e067-b94c-45c9-b9a4-54090cdcffed",
+  "TemplateSlug": "minecraft-java-proxy",
+  "Lifecycle": {
+    "RootDir": "./proxy/",
+    "BaseDirectory": "./proxy/",
+    "ExecutableWin": "{{JavaPath}}",
+    "ExecutableLinux": "{{JavaPath}}",
+    "ExecutableContainer": "java:{{JavaVersion}}",
+    "CommandLineArgs": "-Xms{{MinMemory}}M -Xmx{{MaxMemory}}M {{CustomJavaArgs}} -jar {{ServerJar}}",
+    "CommandLineParameterFormat": "--{0}={1}",
+    "SupportsUniversalSleep": true,
+    "ExitTimeout": 60,
+    "ExitString": "stop"
+  },
+  "Management": {
+    "SupportsIPv6": true,
+    "MaxUsers": 20
+  },
+  "Metadata": {
+    "DisplayName": "meta.name",
+    "Description": "meta.description",
+    "URL": "https://papermc.io/software/velocity",
+    "DisplayImageSource": "https://assets.papermc.io/brand/velocity_logo_blue.min.svg",
+    "EndpointURIFormat": "",
+    "SpecificDockerImage": "cubecoders/amp3base:java-lts",
+    "ConfigVersion": "1"
+  },
+  "Console": {
+    "FilterMatchRegex": "^>+\\s*",
+    "ThrowawayMessageRegex": "^\\s*>+\\s*$",
+    "AppReadyRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\])?: Done \\([\\d.,]+s\\)!$",
+    "LogRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: (?<level>[A-Z]+))?\\](?: \\[(?<origin>[^\\]]*?)(?:\\/(?<level>[A-Z]+))?\\])?: (?<message>.*)$"
+  },
+  "PortReferences": {
+    "PrimaryApplicationPortRef": "ServerPort"
+  },
+  "UpdateStages": [
+    {
+      "UpdateSource": "FetchURL",
+      "UpdateStageName": "Velocity Proxy Download",
+      "UpdateSourcePlatform": "All",
+      "UpdateSourceData": "{{VelocityBuild.downloadUrl}}",
+      "UpdateSourceArgs": "server.jar",
+      "UpdateSourceTarget": "{{$FullBaseDir}}",
+      "OverwriteExistingFiles": true
+    }
+  ],
+  "PortRequirements": [
+    {
+      "Name": "port.ServerPort.name",
+      "Description": "port.ServerPort.desc",
+      "Ref": "ServerPort",
+      "Port": 25565,
+      "Protocol": "Both"
+    }
+  ],
+  "VersionSources": [
+    {
+      "Id": "velocity.versions",
+      "Url": "https://fill.papermc.io/v3/projects/velocity",
+      "Select": "$.versions.*[*]",
+      "Value": "$"
+    },
+    {
+      "Id": "velocity.builds",
+      "Url": "https://fill.papermc.io/v3/projects/velocity/versions/{{VelocityVersion}}/builds",
+      "Select": "$[*]",
+      "Value": "$.id",
+      "Fields": {
+        "downloadUrl": "$.downloads['server:default'].url",
+        "file": "$.downloads['server:default'].name",
+        "channel": "$.channel"
+      },
+      "CacheMinutes": 30,
+      "DependsOn": [
+        "VelocityVersion"
+      ]
+    }
+  ],
+  "Settings": [
+    {
+      "FieldName": "VelocityVersion",
+      "Required": true,
+      "DefaultValue": "[Latest]",
+      "Category": "category.server-version:package",
+      "DisplayName": "setting.VelocityVersion.name",
+      "Description": "setting.VelocityVersion.desc",
+      "Keywords": "version,velocity",
+      "InputType": "enum",
+      "Order": 1,
+      "ValueSourceId": "velocity.versions"
+    },
+    {
+      "FieldName": "VelocityBuild",
+      "Required": true,
+      "DefaultValue": "[Latest]",
+      "Category": "category.server-version:package",
+      "DisplayName": "setting.VelocityBuild.name",
+      "Description": "setting.VelocityBuild.desc",
+      "Keywords": "build,velocity",
+      "InputType": "enum",
+      "Order": 2,
+      "ValueSourceId": "velocity.builds"
+    },
+    {
+      "FieldName": "JavaVersion",
+      "Deployment": "Container",
+      "DefaultValue": "25",
+      "Category": "category.java:coffee",
+      "DisplayName": "setting.JavaVersion.name",
+      "Description": "setting.JavaVersion.desc",
+      "Keywords": "java,jre,jdk,version",
+      "InputType": "enum",
+      "Order": 1,
+      "EnumValues": {
+        "25": "setting.JavaVersion.value.25",
+        "21": "setting.JavaVersion.value.21",
+        "17": "setting.JavaVersion.value.17",
+        "11": "setting.JavaVersion.value.11",
+        "8": "setting.JavaVersion.value.8"
+      }
+    },
+    {
+      "FieldName": "JavaPath",
+      "Required": true,
+      "Deployment": "Native",
+      "Category": "category.java:coffee",
+      "DisplayName": "setting.JavaPath.name",
+      "Description": "setting.JavaPath.desc",
+      "Keywords": "java,jre,jdk,version,path",
+      "InputType": "enum",
+      "Order": 1,
+      "ValueSourceId": "host.java"
+    },
+    {
+      "FieldName": "MinMemory",
+      "DefaultValue": "256",
+      "Category": "category.java:coffee",
+      "DisplayName": "setting.MinMemory.name",
+      "Description": "setting.MinMemory.desc",
+      "Keywords": "memory,ram,heap,xms",
+      "InputType": "number",
+      "Suffix": "MB",
+      "Order": 2,
+      "MinValue": 256,
+      "MaxValue": 65536
+    },
+    {
+      "FieldName": "MaxMemory",
+      "DefaultValue": "1024",
+      "Category": "category.java:coffee",
+      "DisplayName": "setting.MaxMemory.name",
+      "Description": "setting.MaxMemory.desc",
+      "Keywords": "memory,ram,heap,xmx",
+      "InputType": "number",
+      "Suffix": "MB",
+      "Order": 3,
+      "MinValue": 256,
+      "MaxValue": 65536
+    },
+    {
+      "FieldName": "CustomJavaArgs",
+      "Category": "category.java:coffee",
+      "DisplayName": "setting.CustomJavaArgs.name",
+      "Description": "setting.CustomJavaArgs.desc",
+      "Keywords": "java,args,flags,gc",
+      "InputType": "text",
+      "Order": 4
+    },
+    {
+      "FieldName": "ServerJar",
+      "DefaultValue": "[Automatic]",
+      "Category": "category.java:coffee",
+      "Special": "autofile:*.jar",
+      "DisplayName": "setting.ServerJar.name",
+      "Description": "setting.ServerJar.desc",
+      "Keywords": "jar,server",
+      "InputType": "enum",
+      "Order": 5,
+      "ValueSourceId": "shard.files:*.jar"
+    }
+  ],
+  "BackupExclusions": [
+    "logs/",
+    "*.log",
+    "*.log.gz",
+    "hs_err_pid*.log"
+  ],
+  "Locale": {
+    "en": {
+      "meta.name": "Proxy for Minecraft: Java Edition",
+      "meta.description": "Network multiple Minecraft servers together under one proxy.",
+      "category.server-version": "Server Version",
+      "setting.VelocityVersion.name": "Velocity version",
+      "setting.VelocityVersion.desc": "Which version of Velocity to run.",
+      "setting.VelocityBuild.name": "Velocity build",
+      "setting.VelocityBuild.desc": "Which Velocity build to install. Choose the Velocity version first.",
+      "category.java": "Java",
+      "setting.JavaVersion.name": "Java Version",
+      "setting.JavaVersion.desc": "Which version of Java the proxy should be started with",
+      "setting.JavaVersion.value.25": "25 - LTS",
+      "setting.JavaVersion.value.21": "21 - LTS",
+      "setting.JavaVersion.value.17": "17 - LTS",
+      "setting.JavaVersion.value.11": "11 - LTS",
+      "setting.JavaVersion.value.8": "8 - LTS",
+      "setting.JavaPath.name": "Java Version",
+      "setting.JavaPath.desc": "Which version of Java the server should be started with for server types that rely on Java",
+      "setting.MinMemory.name": "Memory pre-allocation",
+      "setting.MinMemory.desc": "Java's minimum heap size. Must be lower than the maximum heap size.",
+      "setting.MaxMemory.name": "Memory Limit",
+      "setting.MaxMemory.desc": "Java's maximum heap size. Must be greater than or equal to the minimum heap size.",
+      "setting.CustomJavaArgs.name": "Additional java options",
+      "setting.CustomJavaArgs.desc": "Extra arguments to pass to Java in addition to the default AMP uses for a given server type",
+      "setting.ServerJar.name": "Server JAR",
+      "setting.ServerJar.desc": "Which jar file to use. [Automatic] picks the default for the given server type.",
+      "port.ServerPort.name": "Server Port",
+      "port.ServerPort.desc": "The port players connect to."
+    }
+  }
+}
