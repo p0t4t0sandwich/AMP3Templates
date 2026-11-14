@@ -21,7 +21,7 @@
     "DisplayName": "meta.name",
     "Description": "meta.description",
     "URL": "https://papermc.io/software/velocity",
-    "DisplayImageSource": "https://assets.papermc.io/brand/velocity_logo_blue.min.svg",
+    "DisplayImageSource": "url:https://assets.papermc.io/brand/velocity_logo_blue.min.svg",
     "EndpointURIFormat": "",
     "SpecificDockerImage": "cubecoders/amp3base:java-lts",
     "ConfigVersion": "1"
