@@ -337,7 +337,7 @@
       "setting.JavaPath.name": "Java Version",
       "setting.JavaPath.desc": "Which version of Java the proxy should be started with.",
       "setting.MinMemory.name": "Memory pre-allocation",
-      "setting.MinMemory.desc": "Java's minimum heap size. Must be lower than the maximum heap size.",
+      "setting.MinMemory.desc": "Java's minimum heap size. Must be less than or equal to the maximum heap size.",
       "setting.MaxMemory.name": "Memory Limit",
       "setting.MaxMemory.desc": "Java's maximum heap size. Must be greater than or equal to the minimum heap size.",
       "setting.CustomJavaArgs.name": "Additional java options",
