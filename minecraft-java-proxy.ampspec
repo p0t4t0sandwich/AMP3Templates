@@ -122,8 +122,8 @@
     },
     {
       "Id": "bungeecord.builds",
-      "Url": "https://ci.md-5.net/job/BungeeCord/api/json?tree=builds[number,result]",
-      "Select": "$.builds[*]",
+      "Url": "https://ci.md-5.net/job/BungeeCord/api/json?tree=allBuilds[number,result]",
+      "Select": "$.allBuilds[?(@.number >= 680)]",
       "Value": "$.number",
       "Fields": {
         "result": "$.result"
