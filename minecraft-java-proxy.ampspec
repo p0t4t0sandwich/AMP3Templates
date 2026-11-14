@@ -20,6 +20,7 @@
   "Metadata": {
     "DisplayName": "meta.name",
     "Description": "meta.description",
+    "Author": "p0t4t0sandwich",
     "URL": "https://papermc.io/software/velocity",
     "DisplayImageSource": "url:https://assets.papermc.io/brand/velocity_logo_blue.min.svg",
     "EndpointURIFormat": "",
@@ -29,8 +30,8 @@
   "Console": {
     "FilterMatchRegex": "^>+\\s*",
     "ThrowawayMessageRegex": "^\\s*>+\\s*$",
-    "AppReadyRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\])?: Done \\([\\d.,]+s\\)!$",
-    "LogRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: (?<level>[A-Z]+))?\\](?: \\[(?<origin>[^\\]]*?)(?:\\/(?<level>[A-Z]+))?\\])?: (?<message>.*)$"
+    "AppReadyRegex": "^(?:\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\])?: Done \\([\\d.,]+s\\)!|(?:\\d{1,2}:\\d{2}:\\d{2} )?\\[[A-Z]+\\] Listening on /.+)$",
+    "LogRegex": "^(?:\\[\\d{1,2}:\\d{2}:\\d{2}(?: (?<level>[A-Z]+))?\\](?: \\[(?<origin>[^\\]]*?)(?:\\/(?<level>[A-Z]+))?\\])?: |(?:\\d{1,2}:\\d{2}:\\d{2} )?\\[(?<level>[A-Z]+)\\] )(?<message>.*)$"
   },
   "PortReferences": {
     "PrimaryApplicationPortRef": "ServerPort"
@@ -41,9 +42,30 @@
       "UpdateStageName": "Velocity Proxy Download",
       "UpdateSourcePlatform": "All",
       "UpdateSourceData": "{{VelocityBuild.downloadUrl}}",
-      "UpdateSourceArgs": "server.jar",
       "UpdateSourceTarget": "{{$FullBaseDir}}",
-      "OverwriteExistingFiles": true
+      "OverwriteExistingFiles": true,
+      "UpdateSourceConditionSetting": "ProxyType",
+      "UpdateSourceConditionValue": "Velocity"
+    },
+    {
+      "UpdateSource": "FetchURL",
+      "UpdateStageName": "Waterfall Proxy Download",
+      "UpdateSourcePlatform": "All",
+      "UpdateSourceData": "{{WaterfallBuild.downloadUrl}}",
+      "UpdateSourceTarget": "{{$FullBaseDir}}",
+      "OverwriteExistingFiles": true,
+      "UpdateSourceConditionSetting": "ProxyType",
+      "UpdateSourceConditionValue": "Waterfall"
+    },
+    {
+      "UpdateSource": "FetchURL",
+      "UpdateStageName": "BungeeCord Proxy Download",
+      "UpdateSourcePlatform": "All",
+      "UpdateSourceData": "{{BungeeCordBuild.downloadUrl}}",
+      "UpdateSourceTarget": "{{$FullBaseDir}}",
+      "OverwriteExistingFiles": true,
+      "UpdateSourceConditionSetting": "ProxyType",
+      "UpdateSourceConditionValue": "BungeeCord"
     }
   ],
   "PortRequirements": [
@@ -76,32 +98,128 @@
       "DependsOn": [
         "VelocityVersion"
       ]
+    },
+    {
+      "Id": "waterfall.versions",
+      "Url": "https://fill.papermc.io/v3/projects/waterfall",
+      "Select": "$.versions.*[*]",
+      "Value": "$"
+    },
+    {
+      "Id": "waterfall.builds",
+      "Url": "https://fill.papermc.io/v3/projects/waterfall/versions/{{WaterfallVersion}}/builds",
+      "Select": "$[*]",
+      "Value": "$.id",
+      "Fields": {
+        "downloadUrl": "$.downloads['server:default'].url",
+        "file": "$.downloads['server:default'].name",
+        "channel": "$.channel"
+      },
+      "CacheMinutes": 30,
+      "DependsOn": [
+        "WaterfallVersion"
+      ]
+    },
+    {
+      "Id": "bungeecord.builds",
+      "Url": "https://ci.md-5.net/job/BungeeCord/api/json?tree=builds[number,result]",
+      "Select": "$.builds[*]",
+      "Value": "$.number",
+      "Fields": {
+        "result": "$.result"
+      },
+      "Where": {
+        "result": "SUCCESS"
+      },
+      "UrlTemplate": "https://ci.md-5.net/job/BungeeCord/{value}/artifact/bootstrap/target/BungeeCord.jar",
+      "CacheMinutes": 30
     }
   ],
   "Settings": [
     {
+      "FieldName": "ProxyType",
+      "DefaultValue": "Velocity",
+      "Category": "category.server-version:package",
+      "DisplayName": "setting.ProxyType.name",
+      "Description": "setting.ProxyType.desc",
+      "Keywords": "type,flavour,proxy,velocity,waterfall,bungeecord",
+      "InputType": "enum",
+      "Order": 1,
+      "EnumValues": {
+        "Velocity": "setting.ProxyType.value.Velocity",
+        "Waterfall": "setting.ProxyType.value.Waterfall",
+        "BungeeCord": "setting.ProxyType.value.BungeeCord"
+      }
+    },
+    {
       "FieldName": "VelocityVersion",
       "Required": true,
       "DefaultValue": "[Latest]",
+      "ConditionSetting": "ProxyType",
+      "ConditionValue": "Velocity",
       "Category": "category.server-version:package",
       "DisplayName": "setting.VelocityVersion.name",
       "Description": "setting.VelocityVersion.desc",
       "Keywords": "version,velocity",
       "InputType": "enum",
-      "Order": 1,
+      "Order": 2,
       "ValueSourceId": "velocity.versions"
     },
     {
       "FieldName": "VelocityBuild",
       "Required": true,
       "DefaultValue": "[Latest]",
+      "ConditionSetting": "ProxyType",
+      "ConditionValue": "Velocity",
       "Category": "category.server-version:package",
       "DisplayName": "setting.VelocityBuild.name",
       "Description": "setting.VelocityBuild.desc",
       "Keywords": "build,velocity",
       "InputType": "enum",
-      "Order": 2,
+      "Order": 3,
       "ValueSourceId": "velocity.builds"
+    },
+    {
+      "FieldName": "WaterfallVersion",
+      "Required": true,
+      "DefaultValue": "[Latest]",
+      "ConditionSetting": "ProxyType",
+      "ConditionValue": "Waterfall",
+      "Category": "category.server-version:package",
+      "DisplayName": "setting.WaterfallVersion.name",
+      "Description": "setting.WaterfallVersion.desc",
+      "Keywords": "version,waterfall",
+      "InputType": "enum",
+      "Order": 2,
+      "ValueSourceId": "waterfall.versions"
+    },
+    {
+      "FieldName": "WaterfallBuild",
+      "Required": true,
+      "DefaultValue": "[Latest]",
+      "ConditionSetting": "ProxyType",
+      "ConditionValue": "Waterfall",
+      "Category": "category.server-version:package",
+      "DisplayName": "setting.WaterfallBuild.name",
+      "Description": "setting.WaterfallBuild.desc",
+      "Keywords": "build,waterfall",
+      "InputType": "enum",
+      "Order": 3,
+      "ValueSourceId": "waterfall.builds"
+    },
+    {
+      "FieldName": "BungeeCordBuild",
+      "Required": true,
+      "DefaultValue": "[Latest]",
+      "ConditionSetting": "ProxyType",
+      "ConditionValue": "BungeeCord",
+      "Category": "category.server-version:package",
+      "DisplayName": "setting.BungeeCordBuild.name",
+      "Description": "setting.BungeeCordBuild.desc",
+      "Keywords": "build,bungeecord,bungee",
+      "InputType": "enum",
+      "Order": 2,
+      "ValueSourceId": "bungeecord.builds"
     },
     {
       "FieldName": "JavaVersion",
@@ -192,10 +310,21 @@
       "meta.name": "Proxy for Minecraft: Java Edition",
       "meta.description": "Network multiple Minecraft servers together under one proxy.",
       "category.server-version": "Server Version",
+      "setting.ProxyType.name": "Proxy type",
+      "setting.ProxyType.desc": "Which proxy to run. Velocity is a modern, secure-by-default proxy developed by PaperMC. BungeeCord is SpigotMC's proxy, which is insecure by default and requires BungeeGuard to secure connections to backend servers. Waterfall is PaperMC's fork of BungeeCord and is no longer maintained.",
+      "setting.ProxyType.value.Velocity": "Velocity",
+      "setting.ProxyType.value.Waterfall": "Waterfall (end of life)",
+      "setting.ProxyType.value.BungeeCord": "BungeeCord",
       "setting.VelocityVersion.name": "Velocity version",
       "setting.VelocityVersion.desc": "Which version of Velocity to run.",
       "setting.VelocityBuild.name": "Velocity build",
       "setting.VelocityBuild.desc": "Which Velocity build to install. Choose the Velocity version first.",
+      "setting.WaterfallVersion.name": "Waterfall version",
+      "setting.WaterfallVersion.desc": "Which version of Waterfall to run.",
+      "setting.WaterfallBuild.name": "Waterfall build",
+      "setting.WaterfallBuild.desc": "Which Waterfall build to install. Choose the Waterfall version first.",
+      "setting.BungeeCordBuild.name": "BungeeCord build",
+      "setting.BungeeCordBuild.desc": "Which BungeeCord build to install.",
       "category.java": "Java",
       "setting.JavaVersion.name": "Java Version",
       "setting.JavaVersion.desc": "Which version of Java the proxy should be started with",
@@ -205,7 +334,7 @@
       "setting.JavaVersion.value.11": "11 - LTS",
       "setting.JavaVersion.value.8": "8 - LTS",
       "setting.JavaPath.name": "Java Version",
-      "setting.JavaPath.desc": "Which version of Java the server should be started with for server types that rely on Java",
+      "setting.JavaPath.desc": "Which version of Java the proxy should be started with.",
       "setting.MinMemory.name": "Memory pre-allocation",
       "setting.MinMemory.desc": "Java's minimum heap size. Must be lower than the maximum heap size.",
       "setting.MaxMemory.name": "Memory Limit",
