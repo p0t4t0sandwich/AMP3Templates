@@ -15,7 +15,7 @@
   },
   "Management": {
     "SupportsIPv6": true,
-    "MaxUsers": 20
+    "MaxUsers": 999
   },
   "Metadata": {
     "DisplayName": "meta.name",
