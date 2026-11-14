@@ -11,7 +11,7 @@
     "CommandLineParameterFormat": "--{0}={1}",
     "SupportsUniversalSleep": true,
     "ExitTimeout": 60,
-    "ExitString": "stop"
+    "ExitString": "end"
   },
   "Management": {
     "SupportsIPv6": true,
@@ -303,7 +303,8 @@
     "logs/",
     "*.log",
     "*.log.gz",
-    "hs_err_pid*.log"
+    "hs_err_pid*.log",
+    "proxy.log.*"
   ],
   "Locale": {
     "en": {
