@@ -325,7 +325,7 @@
       "setting.WaterfallBuild.name": "Waterfall build",
       "setting.WaterfallBuild.desc": "Which Waterfall build to install. Choose the Waterfall version first.",
       "setting.BungeeCordBuild.name": "BungeeCord build",
-      "setting.BungeeCordBuild.desc": "Which BungeeCord build to install.",
+      "setting.BungeeCordBuild.desc": "Which BungeeCord build to install. Note that builds older than 680 will fail to download, as they do not exist on their build server.",
       "category.java": "Java",
       "setting.JavaVersion.name": "Java Version",
       "setting.JavaVersion.desc": "Which version of Java the proxy should be started with",
