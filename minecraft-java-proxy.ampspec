@@ -82,6 +82,7 @@
       "Ref": "QueryPort",
       "Port": 25565,
       "Protocol": "UDP"
+      "Required": false
     }
   ],
   "VersionSources": [
