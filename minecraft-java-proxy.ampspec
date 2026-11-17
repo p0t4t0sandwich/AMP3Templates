@@ -74,7 +74,15 @@
       "Description": "port.ServerPort.desc",
       "Ref": "ServerPort",
       "Port": 25565,
-      "Protocol": "Both"
+      "Protocol": "TCP"
+    },
+    {
+      "Name": "port.QueryPort.name",
+      "Description": "port.QueryPort.desc",
+      "Ref": "QueryPort",
+      "Port": 25565,
+      "Protocol": "UDP"
+      "Required": false
     }
   ],
   "VersionSources": [
@@ -345,7 +353,9 @@
       "setting.ServerJar.name": "Server JAR",
       "setting.ServerJar.desc": "Which jar file to use. [Automatic] picks the default for the given server type.",
       "port.ServerPort.name": "Server Port",
-      "port.ServerPort.desc": "The port players connect to."
+      "port.ServerPort.desc": "The port players connect to.",
+      "port.QueryPort.name": "Query Port",
+      "port.QueryPort.desc": "Allows external connections to query the server's status using the GS4 protocol."
     }
   }
 }
