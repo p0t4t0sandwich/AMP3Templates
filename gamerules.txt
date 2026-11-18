@@ -1,6 +1,7 @@
 announceAdvancements=true
 commandBlockOutput=true
 disableElytraMovementCheck=false
+disableRaids=false
 doDaylightCycle=true
 doEntityDrops=true
 doFireTick=true
