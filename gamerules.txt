@@ -1,5 +1,6 @@
 commandBlockOutput=true
 doDaylightCycle=true
+doEntityDrops=true
 doFireTick=true
 doMobLoot=true
 doMobSpawning=true
