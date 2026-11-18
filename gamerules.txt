@@ -1,6 +1,7 @@
 announceAdvancements=true
 blockExplosionDropDecay=true
 commandBlockOutput=true
+commandModificationBlockLimit=32768
 disableElytraMovementCheck=false
 disableRaids=false
 doDaylightCycle=true
@@ -14,6 +15,7 @@ doMobSpawning=true
 doPatrolSpawning=true
 doTileDrops=true
 doTraderSpawning=true
+doVinesSpread=true
 doWardenSpawning=true
 doWeatherCycle=true
 drowningDamage=true
