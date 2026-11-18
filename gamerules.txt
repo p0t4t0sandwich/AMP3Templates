@@ -9,7 +9,6 @@ doMobLoot=true
 doMobSpawning=true
 doTileDrops=true
 doWeatherCycle=true
-gameLoopFunction=
 keepInventory=false
 logAdminCommands=true
 maxCommandChainLength=65536
