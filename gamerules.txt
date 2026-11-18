@@ -1,0 +1,7 @@
+commandBlockOutput=true
+doFireTick=true
+doMobLoot=true
+doMobSpawning=true
+doTileDrops=true
+keepInventory=false
+mobGriefing=true
