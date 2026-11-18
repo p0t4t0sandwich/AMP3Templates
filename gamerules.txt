@@ -1,3 +1,4 @@
+allowFireTicksAwayFromPlayer=false
 announceAdvancements=true
 blockExplosionDropDecay=true
 commandBlockOutput=true
@@ -48,6 +49,7 @@ snowAccumulationHeight=1
 spawnChunkRadius=2
 spawnRadius=10
 spectatorsGenerateChunks=true
+tntExplodes=true
 tntExplosionDropDecay=false
 universalAnger=false
 waterSourceConversion=true
