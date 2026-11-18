@@ -43,6 +43,7 @@ reducedDebugInfo=false
 sendCommandFeedback=true
 showDeathMessages=true
 snowAccumulationHeight=1
+spawnChunkRadius=2
 spawnRadius=10
 spectatorsGenerateChunks=true
 tntExplosionDropDecay=false
