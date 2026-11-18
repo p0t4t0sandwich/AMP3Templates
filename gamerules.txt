@@ -1,4 +1,5 @@
 commandBlockOutput=true
+disableElytraMovementCheck=false
 doDaylightCycle=true
 doEntityDrops=true
 doFireTick=true
@@ -13,3 +14,5 @@ randomTickSpeed=3
 reducedDebugInfo=false
 sendCommandFeedback=true
 showDeathMessages=true
+spawnRadius=10
+spectatorsGenerateChunks=true
