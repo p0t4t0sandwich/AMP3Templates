@@ -13,6 +13,7 @@ doMobSpawning=true
 doPatrolSpawning=true
 doTileDrops=true
 doTraderSpawning=true
+doWardenSpawning=true
 doWeatherCycle=true
 drowningDamage=true
 fallDamage=true
