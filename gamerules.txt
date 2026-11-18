@@ -19,6 +19,7 @@ doVinesSpread=true
 doWardenSpawning=true
 doWeatherCycle=true
 drowningDamage=true
+enderPearlsVanishOnDeath=true
 fallDamage=true
 fireDamage=true
 forgiveDeadPlayers=true
