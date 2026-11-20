@@ -38,7 +38,7 @@
     "PreConnectRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\]){0,2}: UUID of player (?<id>[^ ]+) is (?<userid>[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})$",
     "UserIdKind": "minecraft-uuid",
     "UserJoinRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\]){0,2}: (?<username>[^ ]+?)\\[\\/(?<endpoint>.+?)\\] logged in with entity id",
-    "UserLeaveRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\]){0,2}: (?<username>[^ ]+?) lost connection: Disconnected$",
+    "UserLeaveRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\]){0,2}: (?<username>[^ ]+?) lost connection: Disconnected",
     "UserChatRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\]){0,2}: <(?<username>.+?)> (?<message>.+)$",
     "MetricsRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\]){0,2}: Can't keep up! Is the server overloaded\\? Running (?<Lag>\\d+)ms or \\d+ ticks behind$",
     "StartupProgressRegex": "^\\[\\d{1,2}:\\d{2}:\\d{2}(?: [A-Z]+)?\\](?: \\[[^\\]]*\\]){0,2}: (?<stage>Preparing spawn area): (?<PercentageComplete>\\d+)%$",
